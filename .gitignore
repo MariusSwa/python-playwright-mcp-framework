@@ -12,7 +12,6 @@ __pycache__/
 
 # Reports and screenshots
 automation/reports/
-automation/screenshots/
 automation/test-results/
 
 # IDE
