@@ -1,0 +1,42 @@
+name: Run Automation Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.52.0-noble
+
+    defaults:
+      run:
+        working-directory: automation
+
+    env:
+      APP_ENV: test
+      BASE_URL: http://localhost:8000
+      BROWSER: chromium
+      HEADLESS: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install automation dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: automation-report
+          path: automation/reports/

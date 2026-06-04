@@ -1,0 +1,24 @@
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Environment files
+.env
+.env.local
+.env.test
+.env.staging
+
+# Reports and screenshots
+automation/reports/
+automation/screenshots/
+automation/test-results/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

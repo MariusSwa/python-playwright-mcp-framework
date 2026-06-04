@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Y3 Automation Test App</title>
+</head>
+<body>
+  <h1>Login</h1>
+
+  <label for="email">Email</label>
+  <input id="email" type="email">
+
+  <label for="password">Password</label>
+  <input id="password" type="password">
+
+  <button id="login-btn">Login</button>
+
+  <p id="message"></p>
+
+  <script>
+    document.getElementById("login-btn").addEventListener("click", function () {
+      document.getElementById("message").innerText = "Login successful";
+    });
+  </script>
+</body>
+</html>

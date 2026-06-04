@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "self-healing": {
+      "command": "python",
+      "args": ["automation/mcp/servers/self_healing_server.py"]
+    }
+  }
+}
