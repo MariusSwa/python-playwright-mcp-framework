@@ -1,5 +1,6 @@
-import os
+import base64
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 
@@ -13,21 +14,33 @@ def pytest_runtest_makereport(item, call):
         page = item.funcargs.get("page")
 
         if page:
-            os.makedirs("reports/screenshots", exist_ok=True)
+            screenshot_dir = Path("reports") / "screenshots"
+            screenshot_dir.mkdir(parents=True, exist_ok=True)
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            screenshot_path = f"reports/screenshots/{item.name}_{timestamp}.png"
+            screenshot_filename = f"{item.name}_{timestamp}.png"
+            screenshot_path = screenshot_dir / screenshot_filename
+            report_screenshot_path = f"screenshots/{screenshot_filename}"
 
-            page.screenshot(
-                path=screenshot_path,
+            screenshot_bytes = page.screenshot(
+                path=str(screenshot_path),
                 full_page=True,
             )
+            screenshot_base64 = base64.b64encode(screenshot_bytes).decode("utf-8")
 
             print(f"\nScreenshot saved: {screenshot_path}")
 
             pytest_html = item.config.pluginmanager.getplugin("html")
 
             if pytest_html:
-                extra = getattr(report, "extra", [])
-                extra.append(pytest_html.extras.image(screenshot_path))
-                report.extra = extra
+                extras = getattr(report, "extras", [])
+                if item.config.getoption("self_contained_html"):
+                    extras.append(
+                        pytest_html.extras.png(
+                            screenshot_base64,
+                            name=report_screenshot_path,
+                        )
+                    )
+                else:
+                    extras.append(pytest_html.extras.image(report_screenshot_path))
+                report.extras = extras
