@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="dashboard">
+  <header class="topbar">
+    <a class="brand" href="dashboard.html">Test Framework Demo</a>
+    <nav aria-label="Primary navigation">
+      <a href="dashboard.html" aria-current="page">Dashboard</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <button type="button" data-action="logout">Logout</button>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-header">
+      <h1>Dashboard</h1>
+      <p id="welcome-message" data-testid="welcome-message">Welcome back to your demo workspace.</p>
+    </section>
+
+    <section class="dashboard-grid" aria-label="Dashboard sections">
+      <article class="card">
+        <h2>Products</h2>
+        <p>Browse demo products and add items to the local cart.</p>
+        <a class="button-link" href="products.html">View Products</a>
+      </article>
+
+      <article class="card">
+        <h2>Cart</h2>
+        <p>Review saved cart items, update quantities, and checkout.</p>
+        <a class="button-link" href="cart.html">View Cart</a>
+      </article>
+
+      <article class="card">
+        <h2>Profile</h2>
+        <p>Update local profile details used by the test session.</p>
+        <a class="button-link" href="profile.html">View Profile</a>
+      </article>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

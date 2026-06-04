@@ -1,25 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Y3 Automation Test App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-  <h1>Login</h1>
+<body data-page="login">
+  <main class="auth-layout">
+    <section class="auth-panel" aria-labelledby="login-heading">
+      <p class="site-label">Test Framework Demo</p>
+      <h1 id="login-heading">Login</h1>
 
-  <label for="email">Email</label>
-  <input id="email" type="email">
+      <form id="login-form" class="form-stack" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="test@example.com" autocomplete="email" required>
+        </div>
 
-  <label for="password">Password</label>
-  <input id="password" type="password">
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Password123" autocomplete="current-password" required>
+        </div>
 
-  <button id="login-btn">Login</button>
+        <label class="checkbox-field" for="remember-me">
+          <input id="remember-me" name="rememberMe" type="checkbox">
+          <span>Remember Me</span>
+        </label>
 
-  <p id="message"></p>
+        <p id="login-message" class="message" role="alert" aria-live="polite" data-testid="login-message"></p>
 
-  <script>
-    document.getElementById("login-btn").addEventListener("click", function () {
-      document.getElementById("message").innerText = "Login successful";
-    });
-  </script>
+        <button type="submit">Login</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
