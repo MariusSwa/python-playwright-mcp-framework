@@ -34,6 +34,30 @@ jobs:
       - name: Install Playwright browsers
         run: playwright install --with-deps
 
+      # Start the test server / demo site
+      - name: Start demo site
+        working-directory: app
+        run: python -m http.server 8000 &
+
+      - name: Wait for demo site
+        run: |
+          python - <<'PY'
+          import time
+          import urllib.request
+
+          url = "http://localhost:8000"
+
+          for _ in range(20):
+              try:
+                  urllib.request.urlopen(url, timeout=2)
+                  print("Demo site is running")
+                  break
+              except Exception:
+                  time.sleep(1)
+          else:
+              raise RuntimeError("Demo site did not start")
+          PY
+
       - name: Run tests
         run: pytest
 
