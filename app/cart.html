@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="cart">
+  <header class="topbar">
+    <a class="brand" href="dashboard.html">Test Framework Demo</a>
+    <nav aria-label="Primary navigation">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html" aria-current="page">Cart</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <button type="button" data-action="logout">Logout</button>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-header">
+      <h1>Cart</h1>
+      <p id="cart-message" class="message" role="status" aria-live="polite" data-testid="cart-message"></p>
+    </section>
+
+    <section id="cart-items" class="cart-list" aria-label="Cart items"></section>
+    <p id="empty-cart-message" class="empty-state" hidden>Your cart is empty.</p>
+
+    <div class="actions-row">
+      <button id="checkout-button" type="button">Checkout</button>
+    </div>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 from core.base_page import BasePage
 
 
@@ -26,6 +27,12 @@ class LoginPage(BasePage):
     PASSWORD_INPUT = {
         "type": "label",
         "value": "Password"
+    }
+
+    REMEMBER_ME = {
+        "type": "role",
+        "role": "check",
+        "name": "rememberMe"
     }
 
     LOGIN_BUTTON = {

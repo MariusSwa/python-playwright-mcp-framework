@@ -6,13 +6,14 @@ __pycache__/
 
 # Environment files
 .env
-.env.local
-.env.test
-.env.staging
+.env-local
+.env-test
+.env-staging
 
 # Reports and screenshots
 automation/reports/
 automation/test-results/
+reports/
 
 # IDE
 .vscode/
