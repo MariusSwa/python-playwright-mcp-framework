@@ -1,5 +1,6 @@
 (function () {
   const SESSION_KEY = "demo.session";
+  const LOGIN_FLASH_KEY = "demo.loginSuccessMessage";
   const CART_KEY = "demo.cart";
   const PROFILE_KEY = "demo.profile";
 
@@ -73,6 +74,7 @@
             loggedInAt: new Date().toISOString(),
           })
         );
+        sessionStorage.setItem(LOGIN_FLASH_KEY, "Login successful");
         window.location.href = "dashboard.html";
         return;
       }
@@ -93,7 +95,19 @@
 
   function setupDashboard() {
     const session = getSession();
+    const dashboardMessage = document.getElementById("dashboard-message");
     const welcome = document.getElementById("welcome-message");
+    const loginMessage = sessionStorage.getItem(LOGIN_FLASH_KEY);
+
+    if (loginMessage) {
+      setMessage(dashboardMessage, loginMessage, "success");
+      sessionStorage.removeItem(LOGIN_FLASH_KEY);
+
+      window.setTimeout(function () {
+        clearMessage(dashboardMessage);
+      }, 2000);
+    }
+
     welcome.textContent = `Welcome, ${session.firstName}. Choose a demo area to test.`;
   }
 
@@ -246,6 +260,11 @@
     element.textContent = text;
     element.classList.remove("success", "error");
     element.classList.add(type);
+  }
+
+  function clearMessage(element) {
+    element.textContent = "";
+    element.classList.remove("success", "error");
   }
 
   function readJson(key, fallback) {

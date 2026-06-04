@@ -6,7 +6,7 @@ def test_user_can_login(page):
     login_page = LoginPage(page)
 
     login_page.open(BASE_URL)
-    login_page.login("test@test.com", "Password123")
+    login_page.login("test@example.com", "Password123")
     login_page.assert_login_successful()
 
 

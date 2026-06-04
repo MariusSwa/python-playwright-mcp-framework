@@ -29,6 +29,12 @@ class LoginPage(BasePage):
         "value": "Password"
     }
 
+    REMEMBER_ME = {
+        "type": "role",
+        "role": "check",
+        "name": "rememberMe"
+    }
+
     LOGIN_BUTTON = {
         "type": "role",
         "role": "button",
