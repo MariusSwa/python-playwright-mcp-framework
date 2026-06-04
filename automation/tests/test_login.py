@@ -1,5 +1,5 @@
-from pages.login_page import LoginPage
 from core.config import BASE_URL
+from pages.login_page import LoginPage
 
 
 def test_user_can_login(page):
