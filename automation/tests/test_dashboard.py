@@ -1,4 +1,3 @@
-import pytest
 
 from core.config import (
     BASE_URL,
