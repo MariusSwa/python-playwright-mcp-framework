@@ -40,7 +40,8 @@ class LoginPage(BasePage):
     LOGIN_BUTTON = {
         "type": "role",
         "role": "button",
-        "name": "Login"
+        "name": "Login",
+        "exact": True,
     }
 
     SUCCESS_MESSAGE = {

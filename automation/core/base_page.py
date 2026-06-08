@@ -1,6 +1,10 @@
+from collections.abc import Callable
 from typing import Any
 
+from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import Locator, Page, expect
+
+from core.locator_healer import LocatorHealer
 
 LocatorConfig = dict[str, Any]
 
@@ -47,22 +51,34 @@ class BasePage:
         self.page.goto(url)
 
     def click(self, locator: LocatorConfig) -> None:
-        self.resolve_locator(locator).click()
+        self._run_with_locator_repair(locator, "click", lambda item: item.click())
 
     def fill(self, locator: LocatorConfig, value: str) -> None:
-        self.resolve_locator(locator).fill(value)
+        self._run_with_locator_repair(locator, "fill", lambda item: item.fill(value))
 
     def check(self, locator: LocatorConfig) -> None:
-        self.resolve_locator(locator).check()
+        self._run_with_locator_repair(locator, "check", lambda item: item.check())
 
     def select_option(self, locator: LocatorConfig, value: str) -> None:
-        self.resolve_locator(locator).select_option(value)
+        self._run_with_locator_repair(
+            locator,
+            "select_option",
+            lambda item: item.select_option(value),
+        )
 
     def expect_visible(self, locator: LocatorConfig) -> None:
-        expect(self.resolve_locator(locator)).to_be_visible()
+        self._run_with_locator_repair(
+            locator,
+            "expect_visible",
+            lambda item: expect(item).to_be_visible(),
+        )
 
     def expect_text(self, locator: LocatorConfig, text: str) -> None:
-        expect(self.resolve_locator(locator)).to_have_text(text)
+        self._run_with_locator_repair(
+            locator,
+            "expect_text",
+            lambda item: expect(item).to_have_text(text),
+        )
 
     def assert_heading(self, heading_text: str) -> None:
         heading = {
@@ -74,3 +90,22 @@ class BasePage:
 
     def assert_page_loaded(self) -> None:
         raise NotImplementedError("Page objects must implement assert_page_loaded().")
+
+    def _run_with_locator_repair(
+        self,
+        locator: LocatorConfig,
+        action: str,
+        operation: Callable[[Locator], object],
+    ) -> None:
+        try:
+            operation(self.resolve_locator(locator))
+        except (AssertionError, PlaywrightError) as error:
+            repaired_locator = LocatorHealer(self).repair_locator(
+                locator=locator,
+                action=action,
+                error=error,
+            )
+            if repaired_locator is None:
+                raise
+
+            operation(self.resolve_locator(repaired_locator))

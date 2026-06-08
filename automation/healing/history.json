@@ -1,0 +1,139 @@
+[
+  {
+    "timestamp": "2026-06-08T19:32:40.038778+00:00",
+    "test_id": "tests/test_login.py::test_user_can_login[chromium]",
+    "page_object": "LoginPage",
+    "locator_name": "LOGIN_BUTTON",
+    "action": "click",
+    "mode": "repair",
+    "old_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Sign in"
+    },
+    "new_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Login",
+      "exact": true
+    },
+    "confidence": 0.96,
+    "status": "patched",
+    "reason": "The original button locator failed, and the page has exactly one visible button candidate: Login."
+  },
+  {
+    "timestamp": "2026-06-08T19:34:57.289120+00:00",
+    "test_id": "tests/test_login.py::test_user_can_login[chromium]",
+    "page_object": "LoginPage",
+    "locator_name": "LOGIN_BUTTON",
+    "action": "click",
+    "mode": "repair",
+    "old_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Sign in",
+      "exact": true
+    },
+    "new_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Login",
+      "exact": true
+    },
+    "confidence": 0.96,
+    "status": "patched",
+    "reason": "The original button locator failed, and the page has exactly one visible button candidate: Login."
+  },
+  {
+    "timestamp": "2026-06-08T19:48:28.790877+00:00",
+    "test_id": "tests/test_login.py::test_user_can_login[chromium]",
+    "page_object": "LoginPage",
+    "locator_name": "LOGIN_BUTTON",
+    "action": "click",
+    "mode": "dry_run",
+    "old_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Sign In",
+      "exact": true
+    },
+    "new_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Login",
+      "exact": true
+    },
+    "confidence": 0.96,
+    "status": "dry_run",
+    "reason": "The original button locator failed, and the page has exactly one visible button candidate: Login."
+  },
+  {
+    "timestamp": "2026-06-08T19:48:59.175965+00:00",
+    "test_id": "tests/test_login.py::test_invalid_login_shows_error[chromium]",
+    "page_object": "LoginPage",
+    "locator_name": "LOGIN_BUTTON",
+    "action": "click",
+    "mode": "dry_run",
+    "old_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Sign In",
+      "exact": true
+    },
+    "new_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Login",
+      "exact": true
+    },
+    "confidence": 0.96,
+    "status": "dry_run",
+    "reason": "The original button locator failed, and the page has exactly one visible button candidate: Login."
+  },
+  {
+    "timestamp": "2026-06-08T20:09:45.998455+00:00",
+    "test_id": "tests/test_login.py::test_user_can_login[chromium]",
+    "page_object": "LoginPage",
+    "locator_name": "LOGIN_BUTTON",
+    "action": "click",
+    "mode": "repair",
+    "old_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Sign In",
+      "exact": true
+    },
+    "new_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Login",
+      "exact": true
+    },
+    "confidence": 0.96,
+    "status": "patched",
+    "reason": "The original button locator failed, and the page has exactly one visible button candidate: Login."
+  },
+  {
+    "timestamp": "2026-06-08T20:10:16.210026+00:00",
+    "test_id": "tests/test_login.py::test_invalid_login_shows_error[chromium]",
+    "page_object": "LoginPage",
+    "locator_name": "LOGIN_BUTTON",
+    "action": "click",
+    "mode": "repair",
+    "old_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Sign In",
+      "exact": true
+    },
+    "new_locator": {
+      "type": "role",
+      "role": "button",
+      "name": "Login",
+      "exact": true
+    },
+    "confidence": 0.96,
+    "status": "patched",
+    "reason": "The original button locator failed, and the page has exactly one visible button candidate: Login."
+  }
+]
