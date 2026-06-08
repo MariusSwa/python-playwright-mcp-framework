@@ -12,6 +12,24 @@ BASE_URL: str = os.getenv("BASE_URL", "http://localhost:8000")
 BROWSER: str = os.getenv("BROWSER", "chromium")
 HEADLESS: bool = os.getenv("HEADLESS", "true").lower() == "true"
 
+LOCATOR_REPAIR_MODE: str = os.getenv("LOCATOR_REPAIR_MODE", "off").lower()
+LOCATOR_REPAIR_MIN_CONFIDENCE: float = float(
+    os.getenv("LOCATOR_REPAIR_MIN_CONFIDENCE", "0.95")
+)
+LOCATOR_REPAIR_MAX_REPAIRS_PER_TEST: int = int(
+    os.getenv("LOCATOR_REPAIR_MAX_REPAIRS_PER_TEST", "1")
+)
+LOCATOR_REPAIR_MAX_ATTEMPTS_PER_LOCATOR: int = int(
+    os.getenv("LOCATOR_REPAIR_MAX_ATTEMPTS_PER_LOCATOR", "1")
+)
+LOCATOR_REPAIR_MAX_MCP_CALLS_PER_TEST: int = int(
+    os.getenv("LOCATOR_REPAIR_MAX_MCP_CALLS_PER_TEST", "2")
+)
+LOCATOR_REPAIR_HISTORY_FILE: Path = (
+    Path(__file__).resolve().parents[1] / "healing" / "history.json"
+)
+CI: bool = os.getenv("CI", "false").lower() == "true"
+
 TEST_EMAIL = cast(str, os.getenv("TEST_EMAIL"))
 TEST_PASSWORD = cast(str, os.getenv("TEST_PASSWORD"))
 

@@ -1,112 +1,130 @@
 # Python Playwright MCP Automation Framework
 
-A Python-based Playwright automation framework built for a third-year project and portfolio template.
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
+[![Playwright](https://img.shields.io/badge/playwright-python-2EAD33.svg)](https://playwright.dev/python/)
+[![Pytest](https://img.shields.io/badge/tested%20with-pytest-0A9EDC.svg)](https://docs.pytest.org/)
+[![Ruff](https://img.shields.io/badge/linting-ruff-D7FF64.svg)](https://docs.astral.sh/ruff/)
+[![Mypy](https://img.shields.io/badge/types-mypy-blue.svg)](https://mypy-lang.org/)
+[![MCP](https://img.shields.io/badge/MCP-ready-purple.svg)](https://modelcontextprotocol.io/)
+[![Code Quality](https://github.com/MariusSwa/python-playwright-mcp-framework/actions/workflows/code-quality.yml/badge.svg)](https://github.com/MariusSwa/python-playwright-mcp-framework/actions/workflows/code-quality.yml)
+[![Run Automation Tests](https://github.com/MariusSwa/python-playwright-mcp-framework/actions/workflows/tests.yml/badge.svg)](https://github.com/MariusSwa/python-playwright-mcp-framework/actions/workflows/tests.yml)
 
-The framework is designed to support:
+A Python Playwright automation framework built around maintainable page objects, preferred Playwright locators, readable pytest steps, HTML reporting, GitHub Actions, and local MCP-ready locator repair.
 
-* Playwright with Python
-* Pytest test execution
-* Page Object Model
-* Preferred Playwright locators
-* Screenshot reporting
-* Ruff linting
-* Mypy static analysis
-* GitHub Actions
-* Future MCP support for self-healing locators and AI test generation
+The demo application is a static ecommerce-style site with Login, Dashboard, Products, Cart, and Profile pages.
 
----
+## Features
 
-# Project Structure
+- Python 3.12+ automation framework
+- Playwright Python browser automation
+- Pytest test execution
+- Page Object Model
+- Reusable components, such as `Navbar`
+- Structured locator dictionaries for future MCP/AI inspection
+- Preferred Playwright locators
+- Business-readable test steps
+- HTML reports and failure screenshots
+- Ruff linting
+- Mypy static analysis
+- GitHub Actions for code quality and test execution
+- Local configurable locator repair with audit history
+
+## Project Structure
 
 ```text
 source/
-├── app/                         # Static demo web application
-│   ├── index.html
-│   ├── dashboard.html
-│   ├── products.html
-│   ├── cart.html
-│   ├── profile.html
-│   └── assets/
-│
-├── automation/                  # Playwright automation framework
-│   ├── core/
-│   │   ├── base_page.py
-│   │   ├── config.py
-│   │   └── locator_resolver.py
-│   │
-│   ├── pages/
-│   │   └── login_page.py
-│   │
-│   ├── tests/
-│   │   └── test_login.py
-│   │
-│   ├── mcp/                     # Future MCP server/client work
-│   ├── reports/
-│   ├── requirements.txt
-│   ├── pytest.ini
-│   ├── ruff.toml
-│   └── mypy.ini
-│
-├── .github/
-│   └── workflows/
-│       ├── code-quality.yml
-│       └── tests.yml
-│
-└── README.md
+|-- app/                         # Static demo web application
+|   |-- index.html
+|   |-- dashboard.html
+|   |-- products.html
+|   |-- cart.html
+|   |-- profile.html
+|   `-- assets/
+|
+|-- automation/                  # Playwright automation framework
+|   |-- components/
+|   |   `-- navbar.py
+|   |-- core/
+|   |   |-- base_page.py
+|   |   |-- config.py
+|   |   |-- locator_healer.py
+|   |   `-- test_steps.py
+|   |-- healing/
+|   |   `-- history.json
+|   |-- mcp/
+|   |   |-- client.py
+|   |   |-- prompts/
+|   |   `-- servers/
+|   |       `-- self_healing_server.py
+|   |-- pages/
+|   |   |-- login_page.py
+|   |   |-- dashboard_page.py
+|   |   |-- products_page.py
+|   |   |-- cart_page.py
+|   |   `-- profile_page.py
+|   |-- reports/
+|   |-- tests/
+|   |   |-- test_login.py
+|   |   |-- test_dashboard.py
+|   |   |-- test_products.py
+|   |   |-- test_cart.py
+|   |   |-- test_profile.py
+|   |   `-- test_navigation.py
+|   |-- requirements.txt
+|   |-- pytest.ini
+|   |-- ruff.toml
+|   `-- mypy.ini
+|
+|-- .github/
+|   `-- workflows/
+|       |-- code-quality.yml
+|       `-- tests.yml
+|
+|-- docker/
+|-- .env-example
+|-- .env.local
+`-- README.md
 ```
 
----
+## Requirements
 
-# Requirements
+- Python 3.12+
+- Git
+- A terminal such as PowerShell, Bash, or VS Code terminal
+- Optional: Docker Desktop for future container work
 
-Install these globally:
+## Installation
 
-```bash
-python --version
-git --version
-```
-
-Recommended:
-
-```text
-Python 3.12+
-Git
-VS Code
-Docker Desktop (optional for future use)
-```
-
-Playwright browsers are installed inside the Python virtual environment.
-
----
-
-# Clone the Repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/MariusSwa/python-playwright-mcp-framework.git
 cd python-playwright-mcp-framework
 ```
 
----
-
-# Create and Activate Virtual Environment
-
-From the automation folder:
+Create and activate a virtual environment from the `automation` folder:
 
 ```bash
 cd automation
 python -m venv .venv
 ```
 
-Activate on Windows PowerShell:
+Windows PowerShell:
 
-```bash
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Windows command prompt:
+
+```cmd
 .venv\Scripts\activate
 ```
 
-You should see:
+macOS/Linux:
 
-```text
-(.venv)
+```bash
+source .venv/bin/activate
 ```
 
 Install dependencies:
@@ -121,9 +139,40 @@ Install Playwright browsers:
 playwright install
 ```
 
----
+## Environment Setup
 
-# Run the Demo Site
+Create a local environment file from the project root:
+
+```bash
+cp .env-example .env.local
+```
+
+On Windows PowerShell:
+
+```powershell
+Copy-Item .env-example .env.local
+```
+
+Required local values:
+
+```env
+APP_ENV=local
+BASE_URL=http://localhost:8000
+BROWSER=chromium
+HEADLESS=true
+
+TEST_EMAIL=test@example.com
+TEST_PASSWORD=Password123
+```
+
+The demo application currently accepts:
+
+```text
+Email: test@example.com
+Password: Password123
+```
+
+## Run the Demo Site
 
 Open a terminal from the project root:
 
@@ -132,7 +181,7 @@ cd app
 python -m http.server 8000
 ```
 
-Open the application:
+Open the app in a browser:
 
 ```text
 http://localhost:8000
@@ -140,39 +189,45 @@ http://localhost:8000
 
 Keep this terminal running while executing tests.
 
----
-
-# Run Tests
+## Run Tests
 
 Open a second terminal:
 
 ```bash
 cd automation
-.venv\Scripts\activate
-pytest -s
 ```
 
-Run a specific test file:
+Activate the virtual environment, then run:
 
 ```bash
-pytest tests/test_login.py -s
+pytest
 ```
 
-Reports are generated in:
+Run one test file:
+
+```bash
+pytest tests/test_login.py
+```
+
+Run one test:
+
+```bash
+pytest tests/test_login.py::test_user_can_login
+```
+
+Reports are generated at:
 
 ```text
 automation/reports/report.html
 ```
 
-Failure screenshots are stored in:
+Failure screenshots are saved in:
 
 ```text
 automation/reports/screenshots/
 ```
 
----
-
-# Code Quality
+## Code Quality
 
 Run Ruff:
 
@@ -198,7 +253,7 @@ Run Mypy:
 mypy .
 ```
 
-Run all local checks:
+Recommended local check before pushing:
 
 ```bash
 ruff check .
@@ -206,22 +261,75 @@ mypy .
 pytest
 ```
 
----
+## GitHub Actions
 
-# Page Object Design
+This repository includes two workflows.
 
-Each page object should be split into three sections:
+### Code Quality
+
+File:
 
 ```text
-Locators
-Actions
-Assertions
+.github/workflows/code-quality.yml
 ```
+
+Runs on pull requests to `main` and manual `workflow_dispatch`.
+
+Checks:
+
+- Install Python 3.12
+- Install `automation/requirements.txt`
+- Run `ruff check .`
+- Run `mypy .`
+
+### Run Automation Tests
+
+File:
+
+```text
+.github/workflows/tests.yml
+```
+
+Runs on pull requests to `main` and manual `workflow_dispatch`.
+
+Checks:
+
+- Use the official Playwright Python container
+- Install automation dependencies
+- Install Playwright browsers
+- Start the static demo site
+- Run `pytest`
+- Upload `automation/reports/` as an artifact
+
+The test workflow expects these GitHub Actions secrets:
+
+```text
+TEST_EMAIL
+TEST_PASSWORD
+```
+
+Locator repair is disabled in CI when `CI=true`.
+
+## Framework Design
+
+The framework uses the Page Object Model. Tests should describe user behavior, while page objects handle locators and browser interactions.
+
+Each page object should contain:
+
+- Locators
+- Actions
+- Assertions
 
 Example:
 
 ```python
+from playwright.sync_api import Page
+
+from core.base_page import BasePage
+
+
 class LoginPage(BasePage):
+    PAGE_HEADER = "Login"
 
     # Locators
     EMAIL_INPUT = {
@@ -229,80 +337,116 @@ class LoginPage(BasePage):
         "value": "Email",
     }
 
+    PASSWORD_INPUT = {
+        "type": "label",
+        "value": "Password",
+    }
+
     LOGIN_BUTTON = {
         "type": "role",
         "role": "button",
         "name": "Login",
+        "exact": True,
     }
 
+    ERROR_MESSAGE = {
+        "type": "test_id",
+        "value": "login-message",
+    }
+
+    def __init__(self, page: Page):
+        super().__init__(page)
+
     # Actions
-    def login(self, email: str, password: str):
+    def open(self, base_url: str) -> None:
+        self.goto(base_url)
+
+    def login(self, email: str, password: str) -> None:
         self.fill(self.EMAIL_INPUT, email)
         self.fill(self.PASSWORD_INPUT, password)
         self.click(self.LOGIN_BUTTON)
 
     # Assertions
-    def assert_error_message_visible(self):
+    def assert_login_failed(self) -> None:
         self.expect_visible(self.ERROR_MESSAGE)
 ```
 
-This keeps locator changes separate from test actions.
+Tests should not call Playwright directly. Use page object methods instead.
 
-If a locator changes, it should only be updated once.
+Avoid this in tests:
 
----
+```python
+page.get_by_role("button", name="Login").click()
+```
 
-# Preferred Playwright Locators
+Prefer this:
 
-This framework uses Playwright's preferred locators wherever possible.
+```python
+login_page.login(TEST_EMAIL, TEST_PASSWORD)
+```
 
-Preferred order:
+## Components
+
+Shared UI should be modeled as components. The navbar is implemented in:
 
 ```text
-1. get_by_role()
-2. get_by_label()
-3. get_by_placeholder()
-4. get_by_text()
-5. get_by_test_id()
-6. CSS fallback only when needed
+automation/components/navbar.py
 ```
 
-Avoid XPath unless absolutely necessary.
+Example usage:
 
----
+```python
+from components.navbar import Navbar
 
-# Locator Examples
 
-## Button
-
-HTML:
-
-```html
-<button>Login</button>
+navbar = Navbar(page)
+navbar.go_to_products()
 ```
 
-Locator:
+Use components when the same UI appears across multiple pages, such as:
+
+- Navbar
+- Toast
+- Modal
+- Product card
+- Footer
+
+## Preferred Locators
+
+Use Playwright recommended locators in this order:
+
+1. Role
+2. Label
+3. Placeholder
+4. Text
+5. Test ID
+6. CSS fallback only when required
+
+Avoid:
+
+- XPath
+- Complex CSS selectors
+- Position-based locators
+- Brittle DOM-depth selectors
+
+### Role Locator
+
+Use for buttons, links, headings, checkboxes, and other accessible elements.
 
 ```python
 LOGIN_BUTTON = {
     "type": "role",
     "role": "button",
     "name": "Login",
+    "exact": True,
 }
 ```
 
----
+`exact=True` means the accessible name must match exactly. For example, `Cart` will not also match `View Cart`.
 
-## Text Input with Label
+### Label Locator
 
-HTML:
-
-```html
-<label for="email">Email</label>
-<input id="email" type="email">
-```
-
-Locator:
+Use for inputs with labels.
 
 ```python
 EMAIL_INPUT = {
@@ -311,37 +455,9 @@ EMAIL_INPUT = {
 }
 ```
 
----
+### Placeholder Locator
 
-## Password Field
-
-HTML:
-
-```html
-<label for="password">Password</label>
-<input id="password" type="password">
-```
-
-Locator:
-
-```python
-PASSWORD_INPUT = {
-    "type": "label",
-    "value": "Password",
-}
-```
-
----
-
-## Placeholder
-
-HTML:
-
-```html
-<input placeholder="Search products">
-```
-
-Locator:
+Use when a field has no useful label but has a stable placeholder.
 
 ```python
 SEARCH_INPUT = {
@@ -350,99 +466,50 @@ SEARCH_INPUT = {
 }
 ```
 
----
+### Text Locator
 
-## Link
-
-HTML:
-
-```html
-<a href="products.html">Products</a>
-```
-
-Locator:
+Use for stable visible text.
 
 ```python
-PRODUCTS_LINK = {
-    "type": "role",
-    "role": "link",
-    "name": "Products",
+SUCCESS_MESSAGE = {
+    "type": "text",
+    "value": "Login successful",
 }
 ```
 
----
+### Test ID Locator
 
-## Heading
-
-HTML:
-
-```html
-<h1>Dashboard</h1>
-```
-
-Locator:
-
-```python
-DASHBOARD_HEADING = {
-    "type": "role",
-    "role": "heading",
-    "name": "Dashboard",
-}
-```
-
----
-
-## Visible Text
-
-HTML:
-
-```html
-<p>Invalid email or password</p>
-```
-
-Locator:
+Use when the application exposes stable `data-testid` attributes.
 
 ```python
 ERROR_MESSAGE = {
-    "type": "text",
-    "value": "Invalid email or password",
+    "type": "test_id",
+    "value": "login-message",
 }
 ```
 
----
+### Scoped Locators
 
-## Test ID
-
-HTML:
-
-```html
-<button data-testid="add-to-cart-wireless-mouse">
-  Add to Cart
-</button>
-```
-
-Locator:
+Use `parent` when a locator should be resolved inside another element.
 
 ```python
-ADD_TO_CART_BUTTON = {
+PRODUCT_CARD = {
     "type": "test_id",
-    "value": "add-to-cart-wireless-mouse",
+    "value": "product-wireless-mouse",
+}
+
+ADD_TO_CART_BUTTON = {
+    "type": "role",
+    "role": "button",
+    "name": "Add to Cart",
+    "exact": True,
+    "parent": PRODUCT_CARD,
 }
 ```
 
----
+### CSS Fallback
 
-## CSS Fallback
-
-Only use when preferred locators are not practical.
-
-HTML:
-
-```html
-<div class="toast success">Saved successfully</div>
-```
-
-Locator:
+Use CSS only when preferred locators are not practical.
 
 ```python
 SUCCESS_TOAST = {
@@ -451,129 +518,213 @@ SUCCESS_TOAST = {
 }
 ```
 
----
+## BasePage Methods
 
-# Why Preferred Locators Matter
+All page object actions should flow through `BasePage`.
 
-Preferred Playwright locators make tests more stable because they locate elements the way users interact with the page.
-
-Better:
+Available helpers include:
 
 ```python
-page.get_by_role("button", name="Login")
+self.goto(url)
+self.click(locator)
+self.fill(locator, value)
+self.check(locator)
+self.select_option(locator, value)
+self.expect_visible(locator)
+self.expect_text(locator, text)
+self.assert_heading("Dashboard")
 ```
 
-Less ideal:
+This keeps interactions centralized and allows locator repair to intercept failures.
+
+## Writing Tests
+
+Tests use business-readable steps from `core.test_steps`.
+
+Example:
 
 ```python
-page.locator("#login-btn")
+from core.config import BASE_URL, TEST_EMAIL, TEST_PASSWORD
+from core.test_steps import step
+from pages.login_page import LoginPage
+
+
+def test_user_can_login(page):
+    login_page = LoginPage(page)
+
+    with step("Open login page"):
+        login_page.open(BASE_URL)
+
+    with step("Login with valid credentials"):
+        login_page.login(TEST_EMAIL, TEST_PASSWORD)
+
+    with step("Verify login success message is displayed"):
+        login_page.assert_login_successful()
 ```
 
-If the button ID changes, the CSS locator breaks.
+Where it remains clear, group related actions and assertions in one business-level step:
 
-If the button text and role remain the same, the preferred locator still works.
+```python
+with step("Open products page"):
+    navbar.go_to_products()
+    products_page.assert_page_loaded()
+    products_page.assert_product_is_displayed("Mechanical Keyboard")
+```
 
-This also helps future MCP self-healing because each locator contains useful metadata such as:
+Good step names:
+
+- Open login page
+- Login with valid credentials
+- Open products page
+- Add Wireless Mouse to cart
+- Remove item from cart
+- Verify cart is empty
+
+Avoid low-level step names:
+
+- Click button
+- Fill field
+- Assert text
+- Use locator
+
+## Adding a New Page Object
+
+1. Create a file in `automation/pages/`, for example `orders_page.py`.
+2. Create a class that inherits from `BasePage`.
+3. Add structured locator dictionaries.
+4. Add action methods for user behavior.
+5. Add assertion methods for expected page state.
+6. Write tests that use the page object.
+
+Template:
+
+```python
+from playwright.sync_api import Page
+
+from core.base_page import BasePage
+
+
+class OrdersPage(BasePage):
+    PAGE_HEADER = "Orders"
+
+    CREATE_ORDER_BUTTON = {
+        "type": "role",
+        "role": "button",
+        "name": "Create Order",
+        "exact": True,
+    }
+
+    def __init__(self, page: Page):
+        super().__init__(page)
+
+    def open(self, base_url: str) -> None:
+        self.goto(f"{base_url.rstrip('/')}/orders.html")
+
+    def create_order(self) -> None:
+        self.click(self.CREATE_ORDER_BUTTON)
+
+    def assert_page_loaded(self) -> None:
+        self.assert_heading(self.PAGE_HEADER)
+```
+
+## Local Locator Repair
+
+The framework currently has local MCP-ready locator repair. It does not call an external AI model yet.
+
+Current flow:
 
 ```text
-role
-name
-label
-text
-intent
+Locator action fails
+BasePage catches the Playwright locator failure
+LocatorHealer captures page context
+Local self_healing_server.py suggests a structured replacement locator
+Suggestion must meet the configured confidence threshold
+Replacement must resolve to exactly one visible element
+Interactive actions also require the element to be enabled
+In repair mode, the page object locator is patched locally
+The failed action is retried
+Repair event is written to automation/healing/history.json
 ```
 
----
+Current implementation:
 
-# GitHub Actions
+- Local file: `automation/mcp/servers/self_healing_server.py`
+- Orchestrator: `automation/core/locator_healer.py`
+- Audit log: `automation/healing/history.json`
 
-This project includes two workflows:
+The current suggestion logic is deterministic and local. It is MCP-ready, but it is not yet connected to an external MCP host or paid LLM.
+
+### Repair Settings
+
+Configure repair in `.env.local`:
+
+```env
+LOCATOR_REPAIR_MODE=off
+LOCATOR_REPAIR_MIN_CONFIDENCE=0.95
+LOCATOR_REPAIR_MAX_REPAIRS_PER_TEST=1
+LOCATOR_REPAIR_MAX_ATTEMPTS_PER_LOCATOR=1
+LOCATOR_REPAIR_MAX_MCP_CALLS_PER_TEST=2
+```
+
+Modes:
 
 ```text
-code-quality.yml
-tests.yml
+off      No repair.
+dry_run  Suggest and log repairs, but do not patch code.
+repair   Validate, patch the page object, and retry the failed action locally.
 ```
 
-## Code Quality Workflow
+Cost and safety controls:
 
-Runs:
+- `LOCATOR_REPAIR_MIN_CONFIDENCE`: minimum confidence needed before repair is accepted.
+- `LOCATOR_REPAIR_MAX_REPAIRS_PER_TEST`: total accepted repairs allowed per test.
+- `LOCATOR_REPAIR_MAX_ATTEMPTS_PER_LOCATOR`: how many times the same locator may be repaired in one test.
+- `LOCATOR_REPAIR_MAX_MCP_CALLS_PER_TEST`: maximum suggestion calls allowed per test, including rejected suggestions.
 
-```text
-Ruff
-Mypy
+Repair is blocked when:
+
+- `LOCATOR_REPAIR_MODE=off`
+- `CI=true`
+- Confidence is below the threshold
+- Per-test repair limit is reached
+- Per-locator repair limit is reached
+- MCP/suggestion call limit is reached
+- The replacement locator does not resolve to exactly one valid element
+- The locator is dynamic and cannot be safely patched as a static page-object locator
+
+Run in dry-run mode:
+
+```powershell
+$env:LOCATOR_REPAIR_MODE = "dry_run"
+pytest tests/test_login.py
 ```
 
-## Test Workflow
+Run in repair mode:
 
-Runs:
-
-```text
-Install dependencies
-Install Playwright browsers
-Start demo site
-Run Pytest
-Upload reports
+```powershell
+$env:LOCATOR_REPAIR_MODE = "repair"
+$env:LOCATOR_REPAIR_MIN_CONFIDENCE = "0.95"
+pytest tests/test_login.py
 ```
 
----
+Or set these values directly in `.env.local`.
 
-# Future MCP Features
+## Current Test Coverage
 
-The framework is prepared for future MCP integration:
+- Login
+- Dashboard
+- Products
+- Cart
+- Profile
+- Navigation
 
-```text
-MCP self-healing locators
-AI-generated Playwright tests
-DOM snapshot analysis
-Locator history
-Healing reports
-```
-
-Planned flow:
-
-```text
-Locator fails
-↓
-Framework captures page context
-↓
-MCP server analyzes DOM
-↓
-Suggested locator returned
-↓
-Test retries
-↓
-Healing result stored
-```
-
----
-
-# Recommended Local Workflow
+## Recommended Local Workflow
 
 ```bash
 cd automation
-.venv\Scripts\activate
-
 ruff check .
 mypy .
 pytest
 ```
 
-Before pushing code:
-
-```bash
-git status
-git add .
-git commit -m "Your commit message"
-git push
-```
-
----
-
-# Current Demo Login
-
-Valid demo user:
-
-```text
-Email: test@example.com
-Password: Password123
-```
+For day-to-day development, keep locator repair off unless you are intentionally testing or repairing broken locators.
