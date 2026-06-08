@@ -1,4 +1,8 @@
-from playwright.sync_api import Page, expect
+from typing import Any
+
+from playwright.sync_api import Locator, Page, expect
+
+LocatorConfig = dict[str, Any]
 
 
 class BasePage:
@@ -6,47 +10,67 @@ class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
-    def resolve_locator(self, locator: dict):
+    def resolve_locator(self, locator: LocatorConfig) -> Locator:
+        parent = locator.get("parent")
+        if parent:
+            return self._resolve_from(self.resolve_locator(parent), locator)
+        return self._resolve_from(self.page, locator)
+
+    def _resolve_from(self, target: Page | Locator, locator: LocatorConfig) -> Locator:
         locator_type = locator.get("type")
 
         if locator_type == "role":
-            return self.page.get_by_role(
+            return target.get_by_role(
                 locator["role"],
-                name=locator["name"]
+                name=locator["name"],
+                exact=locator.get("exact", False),
             )
 
         if locator_type == "label":
-            return self.page.get_by_label(locator["value"])
+            return target.get_by_label(locator["value"])
 
         if locator_type == "placeholder":
-            return self.page.get_by_placeholder(locator["value"])
+            return target.get_by_placeholder(locator["value"])
 
         if locator_type == "text":
-            return self.page.get_by_text(locator["value"])
+            return target.get_by_text(locator["value"])
 
         if locator_type == "test_id":
-            return self.page.get_by_test_id(locator["value"])
+            return target.get_by_test_id(locator["value"])
 
         if locator_type == "css":
-            return self.page.locator(locator["value"])
+            return target.locator(locator["value"])
 
         raise ValueError(f"Unknown locator type: {locator_type}")
 
-    def goto(self, url: str):
+    def goto(self, url: str) -> None:
         self.page.goto(url)
 
-    def click(self, locator: dict):
+    def click(self, locator: LocatorConfig) -> None:
         self.resolve_locator(locator).click()
 
-    def fill(self, locator: dict, value: str):
+    def fill(self, locator: LocatorConfig, value: str) -> None:
         self.resolve_locator(locator).fill(value)
 
-    def expect_visible(self, locator: dict):
+    def check(self, locator: LocatorConfig) -> None:
+        self.resolve_locator(locator).check()
+
+    def select_option(self, locator: LocatorConfig, value: str) -> None:
+        self.resolve_locator(locator).select_option(value)
+
+    def expect_visible(self, locator: LocatorConfig) -> None:
         expect(self.resolve_locator(locator)).to_be_visible()
 
-    def assert_heading(self, heading_text: str):
-        expect(self.page.get_by_role(
-            "heading",
-            name=heading_text,
-            )
-        ).to_be_visible()
+    def expect_text(self, locator: LocatorConfig, text: str) -> None:
+        expect(self.resolve_locator(locator)).to_have_text(text)
+
+    def assert_heading(self, heading_text: str) -> None:
+        heading = {
+            "type": "role",
+            "role": "heading",
+            "name": heading_text,
+        }
+        self.expect_visible(heading)
+
+    def assert_page_loaded(self) -> None:
+        raise NotImplementedError("Page objects must implement assert_page_loaded().")
