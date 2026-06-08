@@ -43,3 +43,10 @@ class BasePage:
 
     def expect_visible(self, locator: dict):
         expect(self.resolve_locator(locator)).to_be_visible()
+
+    def assert_heading(self, heading_text: str):
+        expect(self.page.get_by_role(
+            "heading",
+            name=heading_text,
+            )
+        ).to_be_visible()

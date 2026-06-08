@@ -9,6 +9,8 @@ class LoginPage(BasePage):
     # Page setup
     # -------------------------
 
+    PAGE_HEADER = "Login"
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -46,6 +48,11 @@ class LoginPage(BasePage):
         "value": "Login successful"
     }
 
+    ERROR_MESSAGE = {
+        "type": "test_id",
+        "value": "login-message",
+    }
+
     # -------------------------
     # Actions
     # -------------------------
@@ -70,3 +77,9 @@ class LoginPage(BasePage):
 
     def assert_login_successful(self):
         self.expect_visible(self.SUCCESS_MESSAGE)
+
+    def assert_login_failed(self):
+        self.expect_visible(self.ERROR_MESSAGE)
+    
+    def assert_login_page(self):
+        self.assert_heading(self.PAGE_HEADER)

@@ -15,60 +15,28 @@ class DashboardPage(BasePage):
     def open(self, base_url: str):
         self.goto(base_url)
 
+    PAGE_HEADER = "Dashboard"
 
     # Locators
-    DASHBOARD_HEADING = {
-        "type": "role",
-        "role": "heading",
-        "name": "Dashboard",
-    }
-
-    PRODUCTS_LINK = {
+    VIEW_PRODUCTS_BUTTON = {
         "type": "role",
         "role": "link",
-        "name": "Products",
+        "name": "View Products",
     }
 
-    CART_LINK = {
+    VIEW_CART_BUTTON = {
         "type": "role",
         "role": "link",
-        "name": "Cart",
+        "name": "View Cart",
     }
 
-    PROFILE_LINK = {
+    VIEW_PROFILE_BUTTON = {
         "type": "role",
         "role": "link",
-        "name": "Profile",
+        "name": "View Profile",
     }
-
-    LOGOUT_BUTTON = {
-        "type": "role",
-        "role": "button",
-        "name": "Logout",
-    }
-
-    LOGIN_HEADING = {
-        "type": "role",
-        "role": "heading",
-        "name": "Login",
-    }
+   
 
     # Actions
-    def click_products(self):
-        self.click(self.PRODUCTS_LINK)
-
-    def click_cart(self):
-        self.click(self.CART_LINK)
-
-    def click_profile(self):
-        self.click(self.PROFILE_LINK)
-
-    def logout(self):
-        self.click(self.LOGOUT_BUTTON)
-
-    # Assertions
     def assert_dashboard_loaded(self):
-        self.expect_visible(self.DASHBOARD_HEADING)
-
-    def assert_login_page_loaded(self):
-        self.expect_visible(self.LOGIN_HEADING)
+        self.assert_heading(self.PAGE_HEADER)
